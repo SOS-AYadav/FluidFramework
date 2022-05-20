@@ -64,13 +64,13 @@ export function configureLogging(configOrPath: nconf.Provider | string) {
     const lumberjackConfig = config.get("lumberjack");
     const engineList =
         lumberjackConfig && lumberjackConfig.engineList ?
-        lumberjackConfig.engineList as ILumberjackEngine[] :
-        [new WinstonLumberjackEngine()];
+            lumberjackConfig.engineList as ILumberjackEngine[] :
+            [new WinstonLumberjackEngine()];
 
     const schemaValidatorList =
         lumberjackConfig && lumberjackConfig.schemaValidator ?
-        lumberjackConfig.schemaValidator as ILumberjackSchemaValidator[] :
-        undefined;
+            lumberjackConfig.schemaValidator as ILumberjackSchemaValidator[] :
+            undefined;
 
     Lumberjack.setup(engineList, schemaValidatorList);
 

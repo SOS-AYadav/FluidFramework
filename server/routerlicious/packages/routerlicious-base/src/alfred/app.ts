@@ -86,10 +86,11 @@ export function create(
                 documentId: getIdFromRequest(req.params),
                 serviceName: "alfred",
                 eventName: "http_requests",
-             };
-             logRequestMetric(messageMetaData);
-             winston.info("request log generated", { messageMetaData });
-             return undefined;
+            };
+            logRequestMetric(messageMetaData);
+            winston.info("request log generated", { messageMetaData });
+            winston.info("***********************************", req.headers);
+            return undefined;
         }, { stream }));
     } else {
         app.use(morgan(loggerFormat, { stream }));

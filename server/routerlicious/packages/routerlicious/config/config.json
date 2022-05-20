@@ -252,12 +252,12 @@
             "storage": {
                 "historianUrl": "http://localhost:3001",
                 "internalHistorianUrl": "http://historian:3000",
-                "url": "https://api.github.com",
-                "owner": "gitrepoowner",
-                "repository": "gitrepo",
+                "url": "http://gitrest:3000",
+                "owner": "SOS-AYadav",
+                "repository": "fluidrepo",
                 "credentials": {
-                    "user": "gituser",
-                    "password": "invalid"
+                    "user": "ayadav@lotusinterworks.com",
+                    "password": "*****"
                 }
             }
         },
