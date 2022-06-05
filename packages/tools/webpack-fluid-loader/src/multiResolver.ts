@@ -11,9 +11,9 @@ import { ITinyliciousRouteOptions, RouteOptions } from "./loader";
 import { OdspUrlResolver } from "./odspUrlResolver";
 
 export const dockerUrls = {
-    hostUrl: "http://localhost:3000",
-    ordererUrl: "http://localhost:3003",
-    storageUrl: "http://localhost:3001",
+    hostUrl: "http://3.83.84.211:8888",
+    ordererUrl: "http://3.83.84.211:8888",
+    storageUrl: "http://3.83.84.211:8081",
 };
 
 const defaultTinyliciousPort = 7070;
@@ -41,8 +41,8 @@ function getUrlResolver(options: RouteOptions): IUrlResolver {
         case "r11s":
             return new InsecureUrlResolver(
                 options.fluidHost,
-                options.fluidHost.replace("www", "alfred"),
-                options.fluidHost.replace("www", "historian"),
+                "http://3.83.84.211:8888",
+                "http://3.83.84.211:8081",
                 options.tenantId,
                 options.bearerSecret);
         case "tinylicious": {

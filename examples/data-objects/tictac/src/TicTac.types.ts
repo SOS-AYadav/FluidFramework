@@ -7,12 +7,7 @@ export type defaultValue = "#" | string;
 
 type handleClick = (index: string) => void;
 
-type handleChange = (
-    clientId: string,
-    current: string,
-    index: string) => void;
-
-type updatePlayersName = (value: string) => void;
+type handleChange = (index: number) => void;
 
 export interface ITicTacType {
     index: string;
@@ -34,14 +29,8 @@ export interface ITicTacClientProps {
 }
 
 export interface ITicTacViewProps {
-    clientId: string,
-    current: string;
-    currentPlayer: string;
     gridValues: defaultValue[];
     handleChange: handleChange;
-    players: defaultValue[]
-    playerName: string;
-    updatePlayersName: updatePlayersName
 }
 
 export interface ITicTacBoardProps {

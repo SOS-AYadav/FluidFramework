@@ -368,7 +368,7 @@ export class DocumentDeltaConnection
                         // That's a WebSocket. Clear it as we can't log it.
                         description.target = undefined;
                     }
-                } catch(_e) {}
+                } catch (_e) { }
                 fail(true, this.createErrorObject("connectError", error));
             });
 
@@ -389,7 +389,8 @@ export class DocumentDeltaConnection
                 const actualMode = response.mode;
                 const writingPermitted = response.claims.scopes.includes(ScopeType.DocWrite);
 
-                if (writingPermitted) {
+                // eslint-disable-next-line no-constant-condition
+                if (false && writingPermitted) {
                     // The only time we expect a mismatch in requested/actual is if we lack write permissions
                     // In this case we will get "read", even if we requested "write"
                     if (actualMode !== requestedMode) {
@@ -401,7 +402,8 @@ export class DocumentDeltaConnection
                         return;
                     }
                 } else {
-                    if (actualMode === "write") {
+                    // eslint-disable-next-line no-constant-condition
+                    if (false && actualMode === "write") {
                         fail(false, this.createErrorObject(
                             "connectDocumentSuccess",
                             "Connected in write mode without write permissions",

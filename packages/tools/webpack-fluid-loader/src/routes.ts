@@ -36,7 +36,7 @@ export const before = async (app: express.Application) => {
 export const after = (app: express.Application, server: WebpackDevServer, baseDir: string, env: RouteOptions) => {
     const options: RouteOptions = { mode: "local", ...env, ...{ port: server.options.port } };
     const config: nconf.Provider = nconf
-        .env({ parseValules: true, inputSeparator: "__"})
+        .env({ parseValules: true, inputSeparator: "__" })
         .file(path.join(baseDir, "config.json"));
     const buildTokenConfig = (response, redirectUriCallback?): OdspTokenConfig => ({
         type: "browserLogin",
@@ -273,6 +273,8 @@ export const after = (app: express.Application, server: WebpackDevServer, baseDi
 };
 
 const fluid = (req: express.Request, res: express.Response, baseDir: string, options: RouteOptions) => {
+    const allowed = req.headers.serverpermission
+    console.log('allowed', allowed)
     const documentId = req.params.id;
     // eslint-disable-next-line @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires
     const packageJson = require(path.join(baseDir, "./package.json")) as IFluidPackage;
@@ -300,12 +302,12 @@ const fluid = (req: express.Request, res: express.Response, baseDir: string, opt
             pkgJson,
             window["${packageJson.fluid.browser.umd.library}"],
             options,
-            document.getElementById("content"))
+            document.getElementById("content"),
+            "${allowed}")
         .then(() => fluidStarted = true)
     </script>
 </body>
 </html>`;
-
     res.setHeader("Content-Type", "text/html");
     res.end(html);
 };

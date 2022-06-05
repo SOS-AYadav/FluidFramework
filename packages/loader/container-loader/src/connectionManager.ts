@@ -91,8 +91,7 @@ const createReconnectError = (fluidErrorCode: string, err: any) =>
  */
 class NoDeltaStream
     extends TypedEventEmitter<IDocumentDeltaConnectionEvents>
-    implements IDocumentDeltaConnection, IDisposable
-{
+    implements IDocumentDeltaConnection, IDisposable {
     clientId: string = "storage-only client";
     claims: ITokenClaims = {
         scopes: [ScopeType.DocRead],
@@ -184,7 +183,7 @@ export class ConnectionManager implements IConnectionManager {
     /**
      * The current connection mode, initially read.
      */
-     public get connectionMode(): ConnectionMode {
+    public get connectionMode(): ConnectionMode {
         assert(!this.downgradedConnection || this.connection?.mode === "write",
             0x277 /* "Did we forget to reset downgradedConnection on new connection?" */);
         if (this.connection === undefined) {
@@ -200,7 +199,7 @@ export class ConnectionManager implements IConnectionManager {
      * Automatic reconnecting enabled or disabled.
      * If set to Never, then reconnecting will never be allowed.
      */
-     public get reconnectMode(): ReconnectMode {
+    public get reconnectMode(): ReconnectMode {
         return this._reconnectMode;
     }
 
@@ -232,7 +231,7 @@ export class ConnectionManager implements IConnectionManager {
      * Returns set of props that can be logged in telemetry that provide some insights / statistics
      * about current or last connection (if there is no connection at the moment)
     */
-     public get connectionProps(): ITelemetryProperties {
+    public get connectionProps(): ITelemetryProperties {
         if (this.connection !== undefined) {
             return this._connectionProps;
         } else {
@@ -377,7 +376,7 @@ export class ConnectionManager implements IConnectionManager {
      *
      * @param readonly - set or clear force readonly.
      */
-     public forceReadonly(readonly: boolean) {
+    public forceReadonly(readonly: boolean) {
         if (readonly !== this._forceReadonly) {
             this.logger.sendTelemetryEvent({
                 eventName: "ForceReadOnly",
@@ -544,7 +543,7 @@ export class ConnectionManager implements IConnectionManager {
      * And report the error if it excape for any reason.
      * @param args - The connection arguments
      */
-     private triggerConnect(connectionMode: ConnectionMode) {
+    private triggerConnect(connectionMode: ConnectionMode) {
         assert(this.connection === undefined, 0x239 /* "called only in disconnected state" */);
         if (this.reconnectMode !== ReconnectMode.Enabled) {
             return;
@@ -556,7 +555,7 @@ export class ConnectionManager implements IConnectionManager {
      * Disconnect the current connection.
      * @param reason - Text description of disconnect reason to emit with disconnect event
      */
-     private disconnectFromDeltaStream(reason: string): boolean {
+    private disconnectFromDeltaStream(reason: string): boolean {
         this.pendingReconnect = false;
         this.downgradedConnection = false;
 
@@ -595,7 +594,7 @@ export class ConnectionManager implements IConnectionManager {
      * initial messages.
      * @param connection - The newly established connection
      */
-     private setupNewSuccessfulConnection(connection: IDocumentDeltaConnection, requestedMode: ConnectionMode) {
+    private setupNewSuccessfulConnection(connection: IDocumentDeltaConnection, requestedMode: ConnectionMode) {
         // Old connection should have been cleaned up before establishing a new one
         assert(this.connection === undefined, 0x0e6 /* "old connection exists on new connection setup" */);
         assert(!connection.disposed, 0x28a /* "can't be disposed - Callers need to ensure that!" */);
@@ -696,7 +695,7 @@ export class ConnectionManager implements IConnectionManager {
      * @param error - Error reconnect information including whether or not to reconnect
      * @returns A promise that resolves when the connection is reestablished or we stop trying
      */
-     private reconnectOnError(
+    private reconnectOnError(
         requestedMode: ConnectionMode,
         error: DriverError,
     ) {
@@ -815,7 +814,7 @@ export class ConnectionManager implements IConnectionManager {
                         );
                     }
                 })
-                .catch(() => {});
+                    .catch(() => { });
             }
             return;
         }

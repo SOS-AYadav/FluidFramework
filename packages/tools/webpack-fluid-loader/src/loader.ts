@@ -214,6 +214,7 @@ export async function start(
     fluidModule: IFluidModule,
     options: RouteOptions,
     div: HTMLDivElement,
+    allowed: string
 ): Promise<void> {
     let documentId: string = id;
     let url = window.location.href;
@@ -230,7 +231,7 @@ export async function start(
         documentId = moniker.choose();
         url = url.replace(id, `doc/${documentId}`);
     }
-
+    console.log('internal', allowed, typeof allowed)
     const codeDetails: IFluidCodeDetails = {
         package: packageJson,
         config: {},
@@ -273,6 +274,9 @@ export async function start(
             assert(prefetched, 0x1eb /* "Snapshot should be prefetched!" */);
         }
         container1 = await loader1.resolve({ url: documentUrl });
+        container1.forceReadonly(!(allowed === 'true'))
+        console.log(container1.readOnlyInfo)
+        setTimeout(() => console.log(container1.readOnlyInfo), 10000)
         containers.push(container1);
     }
 
@@ -312,6 +316,7 @@ export async function start(
             testOrderer,
             // odsp-backed containers require special treatment
             !options.mode.startsWith("spo"),
+            allowed
         );
     }
 
@@ -387,6 +392,7 @@ async function attachContainer(
     manualAttach: boolean,
     testOrderer: boolean,
     shouldUseContainerId: boolean,
+    allowed: string
 ) {
     // This is called once loading is complete to replace the url in the address bar with the new `url`.
     const replaceUrl = (resolvedUrl: IResolvedUrl) => {
@@ -406,6 +412,11 @@ async function attachContainer(
     };
 
     let currentContainer = container;
+
+    currentContainer.forceReadonly(!(allowed === 'true'))
+    console.log(currentContainer.readOnlyInfo)
+    setTimeout(() => console.log(currentContainer.readOnlyInfo), 10000)
+
     let currentLeftDiv = leftDiv;
     const attached = new Deferred<void>();
     // To test orderer, we use local driver as wrapper for actual document service. So create request

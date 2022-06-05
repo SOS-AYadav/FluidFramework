@@ -2,8 +2,6 @@
 import { SyncedDataObject } from "@fluid-experimental/react";
 import { defaultValue, ITicTacType } from "./TicTac.types";
 
-export const defaultPlayerValue: string = "foobar";
-
 export const currentTurnValue: string = "X";
 
 export const gridValues: ITicTacType[] = [
@@ -46,19 +44,8 @@ export const gridValues: ITicTacType[] = [
 
 ];
 
-export const bothPlayers: ITicTacType[] = [
-    {
-        index: "0",
-        value: "#",
-    },
-    {
-        index: "1",
-        value: "#",
-    },
-];
-
 // eslint-disable-next-line @typescript-eslint/no-shadow
-export function calculateWinner(gridValues: defaultValue[]): defaultValue | undefined {
+export function calculateWinner(gridValues: defaultValue[]): boolean {
     const lines = [
         [0, 1, 2],
         [3, 4, 5],
@@ -72,10 +59,10 @@ export function calculateWinner(gridValues: defaultValue[]): defaultValue | unde
     for (const line of lines) {
         const [a, b, c] = line;
         if (gridValues[a] !== "#" && gridValues[a] === gridValues[b] && gridValues[a] === gridValues[c]) {
-            return gridValues[a];
+            return true;
         }
     }
-    return undefined;
+    return false;
 }
 
 export function applyMixins(derivedCtor: any, constructors: any[]) {
